@@ -1,0 +1,51 @@
+﻿@model BeeLearn.Models.Student;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mx-auto">
+            <h1 class="jumbotron bg-info text-white text-center">Signup Form</h1>
+            <form method="post">
+                <input asp-for="Id" hidden />
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                @*<label asp-for="Age"></label>
+                <input asp-for="Age" class="form-control" />*@
+                <label asp-for="DOB"></label>
+                <input asp-for="DOB" class="form-control" type="date" />
+                <label asp-for="Gender"></label>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" type="radio" value="Male" />Male
+                </div>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" type="radio" value="Female" />Female
+                </div>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" type="radio" value="Other" />Other
+                </div>
+                <label asp-for="State"></label>
+                <select asp-for="State" class="form-control">
+                    <option value="">Select</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="HR">HR</option>
+                    <option value="HM">HM</option>
+                </select>
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" type="email" />
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />                        
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                              
+                <br />
+                <input type="submit" value="Update" onclick="alert('Data Updated SuccessFully.')" class="btn btn-info btn-block" />
+            </form>          
+        </div>
+    </div>
+</div>
+

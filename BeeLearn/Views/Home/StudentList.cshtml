@@ -1,0 +1,63 @@
+﻿@model List<BeeLearn.Models.Student>;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container p-3">
+    <div class="row p-4">
+        <div class="col-12">
+            <h2 class="bg-info text-white text-center">Student List</h2>
+        </div>
+        <br /><br />
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead class="bg-secondary text-white">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        @*<th>Age</th>*@
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>State</th>
+                        <th>User Name</th>
+                        <th>Password</th>
+                        <th>Confirm Password</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            @*<td>@item.Age</td>*@
+                            <td>@Convert.ToDateTime(@item.DOB).ToString("MM/dd/yyyy")</td>
+                            <td>@item.Gender</td>
+                            <td>@item.State</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Password</td>
+                            <td>@item.ConfirmPassword</td>                          
+                            <td class="text-center">
+                                <div class="w-auto btn-group" role="group">
+                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Edit" class="btn btn-info col-sm-6 mx-2" >Edit</a>
+                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Delete" class="btn btn-danger col-sm-6 mx-2" >Delete</a>
+                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Download" class="btn btn-success col-sm-6 mx-2" >Download</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No Student Exists.</p>
+        }
+        <div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,69 @@
+﻿@model BeeLearn.Models.Student;
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mx-auto">
+            <h1 class="jumbotron bg-primary text-white text-center">Signup Form</h1>
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" /><div><span asp-validation-for="FirstName" class="text-danger"></span></div>
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                    <div><span asp-validation-for="LastName" class="text-danger"></span></div>
+                    @*<label asp-for="Age"></label>
+                    <input asp-for="Age" class="form-control" /><div>
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>*@
+                    <label asp-for="DOB"></label>
+                    <input asp-for="DOB" class="form-control" type="date" /><div>
+                        <span asp-validation-for="DOB" class="text-danger"></span>
+                    </div>
+                    <label asp-for="Gender"></label>
+                    <div class="form-check">
+                        <input asp-for="Gender" class="form-check-input" type="radio" value="Male" />Male
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Gender" class="form-check-input" type="radio" value="Female" />Female
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Gender" class="form-check-input" type="radio" value="Other" />Other
+                    </div>
+                    <div>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+
+                    <label asp-for="State"></label>
+                    <select asp-for="State" class="form-control">
+                        <option value="">Select</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="HR">HR</option>
+                        <option value="HM">HM</option>
+                    </select><div>
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" type="email" /><div>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" type="password" /><div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" /><div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <input type="submit" value="submit" class="btn btn-primary btn-block" />
+            </form>
+    </div>
+    </div>
+</div>
+@section Scripts
+{
+@{ <partial name="_ValidationScriptsPartial" />}
+ }
+
+

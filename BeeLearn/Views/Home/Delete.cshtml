@@ -1,0 +1,49 @@
+﻿@model BeeLearn.Models.Student;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mx-auto">
+            <h1 class="jumbotron bg-danger text-white text-center">Signup Form</h1>
+            <form method="post" asp-action="DeletePost">
+                <input asp-for="Id" hidden />
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" readonly="readonly" />
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" readonly="readonly" />
+                @*<label asp-for="Age"></label>
+                <input asp-for="Age" class="form-control" />*@
+                <label asp-for="DOB"></label>
+                <input asp-for="DOB" class="form-control" type="date" readonly="readonly" />
+                <label asp-for="Gender"></label>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" disabled="disabled" type="radio" value="Male" />Male
+                </div>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" disabled="disabled" type="radio" value="Female" />Female
+                </div>
+                <div class="form-check">
+                    <input asp-for="Gender" class="form-check-input" disabled="disabled" type="radio" value="Other" />Other
+                </div>
+                <label asp-for="State"></label>
+                <select asp-for="State" class="form-control" disabled="disabled">
+                    <option value="">Select</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="HR">HR</option>
+                    <option value="HM">HM</option>
+                </select>
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" readonly="readonly" class="form-control" type="email" />
+                <label asp-for="Password"></label>
+                <input asp-for="Password" readonly="readonly" class="form-control" />
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" readonly="readonly" class="form-control" />
+                <br />
+                <input type="submit" value="Delete" class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to delete student?')" />
+            </form>
+        </div>
+    </div>
+</div>

@@ -100,7 +100,6 @@ namespace BeeLearn.Controllers
         public IActionResult Download()
         {
             DataTable dt = new DataTable("Grid");
-            //dt.Rows.Add("Student Information");           
             dt.Columns.AddRange(new DataColumn[9] { new DataColumn("Id"),
                                         new DataColumn("First Name"),
                                         new DataColumn("Last Name"),                                       
@@ -113,7 +112,8 @@ namespace BeeLearn.Controllers
 
             var customers = from customer in Db.StudentRegistration.Take(9)
                             select customer;
-            
+
+            //dt.Rows.Add("Student Information");
 
             foreach (var customer in customers)
             {              
@@ -122,9 +122,9 @@ namespace BeeLearn.Controllers
             }
 
             using (XLWorkbook wb = new XLWorkbook())
-            {
-                //var ws = wb.Worksheets.Add("Student Details");               
-                wb.Worksheets.Add(dt);               
+            {                
+                wb.Worksheets.Add(dt);
+                var ws = wb.Worksheets.Add("Info");
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

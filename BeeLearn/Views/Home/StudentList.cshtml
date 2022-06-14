@@ -1,63 +1,137 @@
 ﻿@model List<BeeLearn.Models.Student>;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
+        <table id="tblStudent" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><button type="submit" id="Approved" class="btn btn-primary text-white" />  Approved</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>State</th>
+                    <th>User Name</th>
+                    <th>Password</th>
+                    <th>Confirm Password</th>
+                    <th><button type="submit" id="ApprovedAll" class="btn btn-warning text-white" />  Select All</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table> 
 }
-<div class="container p-3">
-    <div class="row p-4">
-        <div class="col-12">
-            <h2 class="bg-info text-white text-center">Student List</h2>
-        </div>
-        <br /><br />
-        @if (Model.Count() > 0)
-        {
-            <table class="table table-bordered table-striped" style="width:100%">
-                <thead class="bg-secondary text-white">
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        @*<th>Age</th>*@
-                        <th>DOB</th>
-                        <th>Gender</th>
-                        <th>State</th>
-                        <th>User Name</th>
-                        <th>Password</th>
-                        <th>Confirm Password</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.FirstName</td>
-                            <td>@item.LastName</td>
-                            @*<td>@item.Age</td>*@
-                            <td>@Convert.ToDateTime(@item.DOB).ToString("MM/dd/yyyy")</td>
-                            <td>@item.Gender</td>
-                            <td>@item.State</td>
-                            <td>@item.UserName</td>
-                            <td>@item.Password</td>
-                            <td>@item.ConfirmPassword</td>                          
-                            <td class="text-center">
-                                <div class="w-auto btn-group" role="group">
-                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Edit" class="btn btn-info col-sm-6 mx-2" >Edit</a>
-                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Delete" class="btn btn-danger col-sm-6 mx-2" >Delete</a>
-                                    <a asp-route-Id="@item.Id" asp-controller="Home" asp-action="Download" class="btn btn-success col-sm-6 mx-2" >Download</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <p>No Student Exists.</p>
-        }
-        <div>
-        </div>
-    </div>
-</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type: "Post",
+                url: "/Home/StudentListData",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    console.log('fail');
+                    alert(response.d);
+                },
+                error: function (response) {
+                    console.log('error');
+                    alert(response.d);
+                }
+            });
+        });
+
+        function OnSuccess(response) {
+            console.log(response);
+            var oTable = $("#tblStudent").DataTable(
+                {
+                    bLengthChange: true,
+                    lengthMenu: [[5, 10, 15], [5, 10, "All"]],
+                    bFilter: true,
+                    bSort: true,
+                    bPaginate: true,
+                    data: response,
+                    columns: [
+                        { 'data': 'id' },
+                        { 'data': 'firstName' },
+                        { 'data': 'lastName' },
+                        {
+                            'data': 'dob',
+                            "render": function (data) {
+                                var date = new Date(data);
+                                return date.toLocaleDateString();
+                            }
+                        },
+                        { 'data': 'gender' },
+                        { 'data': 'state' },
+                        { 'data': 'userName' },
+                        { 'data': 'password' },
+                        { 'data': 'confirmPassword' },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (o) { return '<input type=checkbox value="' + o.id+'" name="Approve" >'; }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (o) { return '<a class="btn btn-info" href="/Home/Edit/' + o.id + '">' + 'Edit' + '</a>'; }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (o) { return '<a class="btn btn-danger" href="/Home/Delete/' + o.id + '">' + 'Delete' + '</a>'; }
+                        },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (o) { return '<a class="btn btn-success" href="/Home/Download/' + o.id + '">' + 'Download' + '</a>'; }
+                        }
+                    ]
+                });
+        };
+        $('#ApprovedAll').click(function (e) {
+            if ($(this).hasClass('checkedAll')) {
+                $('input').prop('checked', false);
+                $(this).removeClass('checkedAll');
+            } else {
+                $('input').prop('checked', true);
+                $(this).addClass('checkedAll');
+            }
+        });
+
+        $(document).ready(function () {
+            $('#Approved').click(function () {
+                var store = $('input[type="checkbox"]:checked');
+                var string = store.length+' ' + "checkbox checked"+' ';
+                if (store.length > 0) {
+                    store.each(function () {
+                        string += $(this).val()+' ';
+                    });
+                    alert(string);
+                }
+                else
+                {
+                    alert("No Checkbox Checked.");
+                } 
+            });
+        });          
+    </script>
+}
 

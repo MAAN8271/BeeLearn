@@ -51,6 +51,13 @@ namespace BeeLearn.Controllers
                 var StudentData = Db.StudentRegistration.ToList();
                 return View(StudentData);
         }
+
+        [HttpGet]
+        public IActionResult StudentListData()
+        {        
+                var StudentData = Db.StudentRegistration.ToList();             
+                return Ok(StudentData);         
+        }
         [HttpGet]
         public IActionResult Edit(int id)
         {        

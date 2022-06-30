@@ -40,9 +40,8 @@
     <script type="text/javascript">
         $(function () {
             $.ajax({
-                type: "Post",
+                type: "Get",
                 url: "/Home/StudentListData",
-                data: '{}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess,

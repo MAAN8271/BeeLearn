@@ -25,15 +25,24 @@ namespace BeeLearn
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
             services.AddControllersWithViews();
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
-            string cs = "Server=BSTPL-LAP-10;Database=BeeLearnDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+            string cs = "Server=BSTPL-CPU-04;Database=BeeLearnDB;Trusted_Connection=True;MultipleActiveResultSets=True";
             services.AddDbContext<StudentContext>(options => options.UseSqlServer(cs));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
